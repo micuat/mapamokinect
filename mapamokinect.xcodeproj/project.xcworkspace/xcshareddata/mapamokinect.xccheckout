@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CDC57C3A-D193-450F-8F64-071235E5923A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>mapamokinect</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B4BCB119-CFA6-4339-8732-4631DA96333C</key>
+		<string>https://github.com/YCAMInterlab/ProCamToolkit.git</string>
+		<key>C2458C21-EAF0-4CF8-B026-0F4B200A4984</key>
+		<string>https://github.com/kylemcdonald/ofxCv.git</string>
+		<key>D33AD94A-1BD1-435D-A5D3-AA0496CB4773</key>
+		<string>https://github.com/kylemcdonald/ofxControlPanel.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>mapamokinect/mapamokinect.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B4BCB119-CFA6-4339-8732-4631DA96333C</key>
+		<string>../../..</string>
+		<key>C2458C21-EAF0-4CF8-B026-0F4B200A4984</key>
+		<string>../../../../../addons/ofxCv</string>
+		<key>D33AD94A-1BD1-435D-A5D3-AA0496CB4773</key>
+		<string>../../../../../addons/ofxControlPanel</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/YCAMInterlab/ProCamToolkit.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B4BCB119-CFA6-4339-8732-4631DA96333C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D33AD94A-1BD1-435D-A5D3-AA0496CB4773</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxControlPanel</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C2458C21-EAF0-4CF8-B026-0F4B200A4984</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxCv</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B4BCB119-CFA6-4339-8732-4631DA96333C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ProCamToolkit</string>
+		</dict>
+	</array>
+</dict>
+</plist>
