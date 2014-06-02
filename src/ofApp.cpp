@@ -100,6 +100,13 @@ void ofApp::draw() {
 		}
 	}
 	
+	if( getb("capturing") ) {
+		objectMesh = mesh;
+		setupMesh();
+		setb("capturing", false);
+		seti("drawMode", 1); // proceed to calibration
+	}
+	
 	ofBackground(geti("backgroundColor"));
     if(getb("loadCalibration")) {
 		loadCalibration();
@@ -160,6 +167,9 @@ void ofApp::keyPressed(int key) {
 	if(key == ' ') { // toggle render/select mode
 		setb("selectionMode", !getb("selectionMode"));
 	}
+	if(key == 'c' && geti("drawMode") == 0) {
+		setb("capturing", true);
+	}
 }
 
 void ofApp::mousePressed(int x, int y, int button) {
@@ -175,9 +185,6 @@ void ofApp::mouseReleased(int x, int y, int button) {
 }
 
 void ofApp::setupMesh() {
-	//	model.loadModel("model.dae");
-	//	objectMesh = model.getMesh(0);
-	objectMesh.load("model.ply");
 	int n = objectMesh.getNumVertices();
 	objectPoints.resize(n);
 	imagePoints.resize(n);
@@ -238,24 +245,16 @@ void ofApp::render() {
 	}
 	ofColor transparentBlack(0, 0, 0, 0);
 	switch(geti("drawMode")) {
-		case 0: // faces
-			if(useShader) shader.begin();
-			glEnable(GL_CULL_FACE);
-			glCullFace(GL_BACK);
+		case 0: // initialCapture
+			mesh.drawVertices();
+			break;
+		case 1: // calibration
 			objectMesh.drawVertices();
-			mesh.drawVertices();
-			if(useShader) shader.end();
 			break;
-		case 1: // fullWireframe
+		case 2: // mapping
 			if(useShader) shader.begin();
 			mesh.drawVertices();
 			if(useShader) shader.end();
-			break;
-		case 2: // outlineWireframe
-			LineArt::draw(mesh, true, transparentBlack, useShader ? &shader : NULL);
-			break;
-		case 3: // occludedWireframe
-			LineArt::draw(mesh, false, transparentBlack, useShader ? &shader : NULL);
 			break;
 	}
 	glPopAttrib();
@@ -406,11 +405,11 @@ void ofApp::setupControlPanel() {
 	panel.addToggle("setupMode", true);
 	panel.addSlider("scale", 1, .1, 25);
 	panel.addSlider("backgroundColor", 0, 0, 255, true);
-	panel.addMultiToggle("drawMode", 3, variadic("faces")("fullWireframe")("outlineWireframe")("occludedWireframe"));
+	panel.addMultiToggle("drawMode", 0, variadic("initialCapture")("calibration")("mapping"));
 	panel.addMultiToggle("shading", 0, variadic("none")("lights")("shader"));
 	panel.addToggle("loadCalibration", false);
 	panel.addToggle("saveCalibration", false);
-	panel.addSlider("meshThreshold", 0.1, 0.0, 3000.0);
+	panel.addSlider("meshThreshold", 6000.f, 0.f, 6000.f);
 	
 	panel.addPanel("Highlight");
 	panel.addToggle("highlight", false);
@@ -444,11 +443,12 @@ void ofApp::setupControlPanel() {
 	panel.addToggle("validShader", true);
 	panel.addToggle("selectionMode", true);
 	panel.addToggle("hoverSelected", false);
-	panel.addSlider("hoverChoice", 0, 0, objectPoints.size(), true);
+	panel.addSlider("hoverChoice", 0, 0, kinect.getWidth() * kinect.getHeight(), true);
 	panel.addToggle("selected", false);
 	panel.addToggle("dragging", false);
 	panel.addToggle("arrowing", false);
-	panel.addSlider("selectionChoice", 0, 0, objectPoints.size(), true);
+	panel.addToggle("capturing", false);
+	panel.addSlider("selectionChoice", 0, 0, kinect.getWidth() * kinect.getHeight(), true);
 	panel.addSlider("slowLerpRate", .001, 0, .01);
 	panel.addSlider("fastLerpRate", 1, 0, 1);
 }
@@ -461,7 +461,7 @@ void ofApp::updateRenderMode() {
 	Point2f c = Point2f(imageSize) * (1. / 2);
 	Mat1d cameraMatrix = (Mat1d(3, 3) <<
 						  f, 0, c.x,
-						  0, f, c.y*1.9,
+						  0, f, c.y,
 						  0, 0, 1);
 	
 	// generate flags
@@ -535,7 +535,7 @@ void ofApp::drawSelectionMode() {
 	}
 	cam.end();
 	
-	if(getb("setupMode")) {
+	if(getb("setupMode") && geti("drawMode") != 0) {
 		// draw all points cyan small
 		glPointSize(geti("screenPointSize"));
 		glEnable(GL_POINT_SMOOTH);
