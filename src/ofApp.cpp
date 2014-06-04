@@ -246,14 +246,14 @@ void ofApp::render() {
 	ofColor transparentBlack(0, 0, 0, 0);
 	switch(geti("drawMode")) {
 		case 0: // initialCapture
-			mesh.drawVertices();
+			mesh.draw();
 			break;
 		case 1: // calibration
-			objectMesh.drawVertices();
+			objectMesh.draw();
 			break;
 		case 2: // mapping
 			if(useShader) shader.begin();
-			mesh.drawVertices();
+			mesh.draw();
 			if(useShader) shader.end();
 			break;
 	}
@@ -538,7 +538,7 @@ void ofApp::drawSelectionMode() {
 	if(getb("setupMode") && geti("drawMode") != 0) {
 		// draw all points cyan small
 		glPointSize(geti("screenPointSize"));
-		glEnable(GL_POINT_SMOOTH);
+		// glEnable(GL_POINT_SMOOTH); // not good with shader
 		ofSetColor(cyanPrint);
 		imageMesh.drawVertices();
 		
@@ -579,7 +579,7 @@ void ofApp::drawRenderMode() {
 	glMatrixMode(GL_MODELVIEW);
 	
 	if(calibrationReady) {
-		intrinsics.loadProjectionMatrix(10, 2000);
+		intrinsics.loadProjectionMatrix(10, 6000);
 		applyMatrix(modelMatrix);
 		render();
 		if(getb("setupMode")) {
